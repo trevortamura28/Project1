@@ -1,0 +1,22 @@
+@model PizzaBox2.Data.PizzaBox2DbContext
+
+@{
+    Layout="_Layout2";
+}
+
+<div class="text-center">
+    <h1 >Select A Location</h1>
+    <form action="/Location/SelectLocation" method="Post">
+    <br><br>
+    @foreach (var l in Model.Locations)
+      {
+        <br>
+        <label>
+        <input type="radio" name="Num" value="@l.Id"> @l.Street &nbsp; @l.City &nbsp;  @l.State </label>
+      }
+      <br><br>
+      <button type="submit">Submit location</button>
+      </form>
+</div>
+
+

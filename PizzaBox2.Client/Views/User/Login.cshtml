@@ -1,0 +1,21 @@
+@{
+  Layout="_PreLoginLayout";
+}
+
+<div class="text-center">
+    <h4 >Welcome to PizzaBox 2</h4>
+    <p>Please login</p>
+    <form action="/User/Login" method="post">
+         <label for="firstname">First Name:</label><br> <input type="text" id="firstname" name="firstname" pattern="[A-Za-z]+">
+         <br>
+         <label for="lastname">Last Name:</label><br> <input type="text" id="lastname" name="lastname" pattern="[A-Za-z]+">
+         <br><br>
+          <button type="submit">Login</button>
+
+       
+    </form>
+    <p>If you do not have an account, please click @Html.ActionLink("here", "NewUser", "User") </p>
+
+    <p>If you are a store manager, please click @Html.ActionLink("here", "SelectLocation", "Employee") </p>
+
+</div>

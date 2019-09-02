@@ -1,0 +1,12 @@
+
+@{
+  Layout="_Layout2";
+}
+
+<div>
+  @foreach( string s in ViewBag.MyString)
+  {
+      <p>@s</p>
+  }   
+  <p> Your total cost is $ @Model</p>
+</div>

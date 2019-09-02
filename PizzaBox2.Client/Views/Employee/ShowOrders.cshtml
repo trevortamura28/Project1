@@ -1,0 +1,19 @@
+
+@{
+    Layout="_Layout2";
+}
+
+<div class="text-center">
+    <h1 >Recent Orders</h1>
+    <br><br>
+    @foreach (var l in Model)
+      {
+        <p>@l</p><br>
+      }
+      <br><br>
+       
+       
+       <p> @Html.ActionLink("Back", "Index", "Employee") </p>
+
+</div>
+
