@@ -1,0 +1,23 @@
+@{
+  Layout="_Layout";
+}
+
+<div class="text-center">
+    <h4 >Classic Pizza Size </h4>
+    <p>Please choose a size</p>
+    <form action="/Pizza/ClassicPizzaSize" method="post">
+        @foreach (var s in ViewBag.s)
+        {
+             <label> <input type="radio" name= "Num" value="@s.Id"> @s.Name  </label><br>
+        }
+        <button type="submit">Select size</button>
+    </form>
+    
+
+    <p> 
+</div>
+
+
+
+
+       

@@ -1,0 +1,14 @@
+@{
+  Layout="_Layout";
+}
+
+<div class="text-center">
+    
+    <p>Add a crust</p>
+    <form action="/Crust/AddCrust" method="post">
+         <label >Name:</label><br> <input type="text" id="name" name="name" pattern="[A-Za-z]+"> <br> 
+         <label >Cost:</label><br> <input type="text" id="cost" name="cost" pattern="[0-9]+"> <br>
+         <button type="submit">Submit</button>
+    </form>
+
+</div>

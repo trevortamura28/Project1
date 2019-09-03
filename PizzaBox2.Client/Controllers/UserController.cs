@@ -4,6 +4,7 @@ using PizzaBox2.Domain.Models;
 using PizzaBox2.Data;
 using System.Linq;
 using System.Security.Claims;
+using PizzaBox2.Client.Models;
 
 namespace PizzaBox2.Client.Controllers
 {
@@ -18,7 +19,11 @@ namespace PizzaBox2.Client.Controllers
     }
     public IActionResult Index()
     {
-      
+
+      return View();
+    }
+    public IActionResult PostOrder()
+    {
       return View();
     }
     [HttpGet]
@@ -34,62 +39,45 @@ namespace PizzaBox2.Client.Controllers
         _db.Users.Add(user);
         _db.SaveChanges();
         Transaction t = new Transaction();
-        t.U=user.Id;
+        t.U = user.Id;
         _db.Transactions.Add(t);
         _db.SaveChanges();
         return RedirectToAction("Index");
       }
       return View();
-
     }
     public IActionResult UserAccount()
     {
-      foreach (var item in _db.Transactions)
-      {
-          if (item.Id == _db.Transactions.Count())
-          {
-            foreach (var u in _db.Users)
-            {
-                if (item.U==u.Id)
-                {
-                  return View(u);
-                }
-            }
-           
-          }
-      }
-      return RedirectToAction("Login");
+      OrderHelper oh = new OrderHelper();
+      User currentUser= oh.GetUser();
+      ViewBag.list = oh.AccountHistory();
+      return View(currentUser);
     }
-  
-
     [HttpPost]
-    
     public IActionResult Login(User user)
     {
-      
-      bool b =false;
-        foreach (var item in _db.Users)
+      bool b = false;
+      foreach (var item in _db.Users)
+      {
+        if (user.FirstName == item.FirstName)
         {
-          if (user.FirstName == item.FirstName)
+          if (user.LastName == item.LastName)
           {
-            if (user.LastName == item.LastName)
-            {
-              Transaction T = new Transaction();
-              T.U=item.Id;
-              _db.Transactions.Add(T);
-              b=true;
-              
-            }
+            Transaction T = new Transaction();
+            T.U = item.Id;
+            _db.Transactions.Add(T);
+            b = true;
           }
         }
-        if(b==true)
-        {
+      }
+      if (b == true)
+      {
         _db.SaveChanges();
         return View("Index");
-        }
+      }
       else
       {
-      return RedirectToAction("Login");
+        return RedirectToAction("Login");
       }
     }
   }

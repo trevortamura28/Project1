@@ -1,0 +1,24 @@
+@{
+  Layout="_Layout";
+}
+
+<div class="text-center">
+    <h4 >Classic Pizza Builder</h4>
+    <p>Please choose a crust type and Name</p>
+    <form action="/Preset/PresetStarter" method="post">
+     <label>Classic pizza name: </label><input type="text" name="List" pattern="[A-Za-z]+"><br>
+        @foreach (var c in ViewBag.crusts)
+        {
+             <label> <input type="radio" name= "Num" value="@c.Id"> @c.Name  </label><br>
+        }
+        <button type="submit">Submit</button>
+    </form>
+    
+
+    <p> 
+</div>
+
+
+
+
+       

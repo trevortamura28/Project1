@@ -1,12 +1,19 @@
 
 @{
-  Layout="_Layout2";
+  Layout="_Layout";
 }
 
+<div class="text-center">
+    <h4 >Order Confirmation</h4>
 <div>
   @foreach( string s in ViewBag.MyString)
   {
       <p>@s</p>
   }   
   <p> Your total cost is $ @Model</p>
+  <br><br>
+  <p>Would you like to confirm your order?</p>
+
+
+   <p> @Html.ActionLink("No", "Login", "User")  @Html.ActionLink("Yes", "PostOrder", "User") </p>
 </div>

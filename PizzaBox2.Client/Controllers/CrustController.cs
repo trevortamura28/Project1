@@ -6,49 +6,50 @@ using System.Linq;
 
 namespace PizzaBox2.Client.Controllers
 {
-    public class CrustController : Controller
+  public class CrustController : Controller
+  {
+    private PizzaBox2DbContext _db = new PizzaBox2DbContext();
+
+    [HttpGet]
+    public IActionResult CustomCrust()
     {
-      private PizzaBox2DbContext _db = new PizzaBox2DbContext();
-
-      [HttpGet]
-      public IActionResult Create()
-      {
-        return View();
-      }
-      public ViewResult Read()
-      {
-        return View(_db.Crusts.ToList());
-      }
-
-      [HttpPost]
-      public IActionResult Create(Crust crust)
-      {
-        if(ModelState.IsValid)
-        {
-        _db.Crusts.Add(crust);
-        _db.SaveChanges();
-        
-        return RedirectToAction("Read");
-        }
-        return RedirectToAction("Create");
-      }
-
-      [HttpPut]
-      public IActionResult Update(Crust crust)
-      {
-        var res=_db.Crusts.Single(c=>c.Id==crust.Id);
-        res.Name= crust.Name;
-        res.Cost= crust.Cost;
-        _db.Attach(crust);
-        _db.SaveChanges();
-
-        return RedirectToAction("Read");
-      }
-      [HttpGet("{id}")]
-      public IActionResult Update(int id)
-      {
-
-        return View(_db.Crusts.Single(c=>c.Id==id));
-      }
+      ViewBag.crusts = _db.Crusts;
+      return View();
     }
+    [HttpPost]
+    public IActionResult CustomCrust(Hold h)
+    {
+      Crust crust = new Crust();
+      foreach (Crust c in _db.Crusts)
+      {
+        if (c.Id == h.Num)
+        {
+          crust.Name = c.Name;
+          crust.Cost = c.Cost;
+          crust.Id = h.Num;
+        }
+      }
+      var p = _db.Pizzas.Single(j => j.Id == _db.Pizzas.Count());
+      p.Cost = p.Cost + crust.Cost;
+      p.CrustId = crust.Id;
+      _db.Attach(p);
+      _db.SaveChanges();
+      return RedirectToAction("CustomTopping", "Topping", new { area = "Admin" });
+    }
+    [HttpGet]
+    public IActionResult AddCrust()
+    {
+      return View();
+    }
+    [HttpPost]
+    public IActionResult AddCrust(Crust c)
+    {
+      Crust crust = new Crust();
+      crust.Name = c.Name;
+      crust.Cost = c.Cost;
+      _db.Crusts.Add(crust);
+      _db.SaveChanges();
+      return RedirectToAction("Index", "Employee", new { area = "Admin" });
+    }
+  }
 }

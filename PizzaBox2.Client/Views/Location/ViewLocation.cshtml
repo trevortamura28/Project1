@@ -1,7 +1,7 @@
 @model PizzaBox2.Domain.Models.Location
 
 @{
-    Layout="_Layout2";
+    Layout="_Layout";
 }
 
 <div class="text-center">
@@ -11,5 +11,6 @@
       
         <li>@Model.Street &nbsp; @Model.City &nbsp; @Model.State</li>
     </ul>
+     <p> @Html.ActionLink("Back", "Index", "Home") </p>
     
 </div>

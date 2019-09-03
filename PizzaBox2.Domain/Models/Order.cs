@@ -13,5 +13,6 @@ namespace PizzaBox2.Domain.Models
     public User User { get; set; }
     public List<Pizza> PizzaList;
     public int LocationId {get; set;}
+    public DateTime Time {get; set;}
   }
 }

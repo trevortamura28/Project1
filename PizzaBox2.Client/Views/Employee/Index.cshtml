@@ -1,12 +1,19 @@
 
 @{
-    Layout="_Layout2";
+    Layout="_Layout";
 }
 
 <div class="text-center">
     <h1 >Welcome to PizzaBox 2</h1>
-    <br><br><br><br>
+    <br><br><br>
     <p> @Html.ActionLink("Display recent users", "ShowUsers", "Employee") </p>
     <p> @Html.ActionLink("Display recent orders", "ShowOrders", "Employee") </p>
+    <p> @Html.ActionLink("Display recent sales", "ShowSales", "Employee") </p>
+    <p> @Html.ActionLink("Display inventory", "ShowInventory", "Employee") </p>
+    <p> @Html.ActionLink("Create a classic pizza", "PresetStarter", "Preset") </p>
+    <p> @Html.ActionLink("Add a Topping", "AddTopping", "Topping") </p>
+    <p> @Html.ActionLink("Add a Size", "AddSize", "Size") </p>
+    <p> @Html.ActionLink("Add a Crust", "AddCrust", "Crust") </p>
+    <p> @Html.ActionLink("Sign out", "Login", "User") </p>
 
 </div>

@@ -1,14 +1,18 @@
 
 @{
-    Layout="_Layout2";
+    Layout="_Layout";
 }
 
 <div class="text-center">
     <h1 >Recent Orders</h1>
     <br><br>
-    @foreach (var l in Model)
+    @foreach (var l in ViewBag.list)
       {
-        <p>@l</p><br>
+        <p> Order:</p>
+        @foreach(var o in l)
+        {
+          <p>@o</p><br>
+        }
       }
       <br><br>
        

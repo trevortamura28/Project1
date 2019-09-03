@@ -4,63 +4,49 @@ using PizzaBox2.Domain.Models;
 using PizzaBox2.Data;
 using System.Linq;
 using System.Security.Claims;
+using PizzaBox2.Client.Models;
+using System;
 
 namespace PizzaBox2.Client.Controllers
 {
   public class LocationController : Controller
   {
     private PizzaBox2DbContext _db = new PizzaBox2DbContext();
-  
-
-    public IActionResult Index()
-    {
-      return View();
-    }
-
     [HttpGet]
     public IActionResult SelectLocation()
     {
-      return View(_db);
+      ViewBag.locations = _db.Locations;
+      return View();
     }
-
     [HttpGet]
     public IActionResult ViewLocation()
     {
-      foreach (var item in _db.Transactions)
+      OrderHelper oh = new OrderHelper();
+      int id = oh.GetLocation();
+      foreach (Location l in _db.Locations)
       {
-          if(item.Id == _db.Transactions.Count())
-          {
-            foreach (var l in _db.Locations)
-            {
-                if (item.L==l.Id)
-                {
-                    return View(l);
-                }
-            }
-          }
+        if (id == l.Id)
+        {
+          return View(l);
+        }
       }
-      return RedirectToAction("Index");
+      return RedirectToAction("Index", "Home", new { area = "Admin" });
     }
-
     [HttpPost]
     public IActionResult SelectLocation(Hold h)
     {
-     var res = _db.Transactions.Single(c => c.Id == _db.Transactions.Count());
-      
-      foreach (var item in _db.Locations)
+      Transaction t = _db.Transactions.Single(c => c.Id == _db.Transactions.Count());
+      foreach (Location item in _db.Locations)
       {
-          if(item.Id==h.Num)
-          {
-            res.L=item.Id;
-            _db.Attach(res);
-            
-          }
+        if (item.Id == h.Num)
+        {
+          t.L = item.Id;
+          _db.Attach(t);
+        }
       }
       _db.SaveChanges();
-      return RedirectToAction("Index");
+
+      return RedirectToAction("Index", "Home", new { area = "Admin" });
     }
-
-
-
   }
 }

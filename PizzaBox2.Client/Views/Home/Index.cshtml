@@ -1,9 +1,13 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-    Layout="_Layout2";
+﻿
+@{
+    Layout="_Layout";
 }
 
 <div class="text-center">
     <h1 >Welcome to PizzaBox 2</h1>
-    <p></p>
+    <br><br><br><br>
+    <p> @Html.ActionLink("View Location", "ViewLocation", "Location") </p>
+    <p> @Html.ActionLink("Order Pizza", "Welcome", "Order") </p>
+    <p> @Html.ActionLink("Account information", "Account", "Home") </p>
+    <p> @Html.ActionLink("Sign out", "Login", "User") </p>
 </div>

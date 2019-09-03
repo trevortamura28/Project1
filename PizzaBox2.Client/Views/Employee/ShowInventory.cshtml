@@ -1,0 +1,19 @@
+
+@{
+    Layout="_Layout";
+}
+
+<div class="text-center">
+    <h1 >Current Stock</h1>
+    <br><br>
+    @foreach (var i in ViewBag.inventories)
+      {
+        <p>Item:@i.Name &nbsp; Count: @i.Count</p><br>
+      }
+      <br><br>
+       
+       
+       <p> @Html.ActionLink("Back", "Index", "Employee") </p>
+
+</div>
+

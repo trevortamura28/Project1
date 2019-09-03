@@ -35,17 +35,21 @@ namespace PizzaBox2.Data.Migrations
                     b.ToTable("Crusts");
                 });
 
-            modelBuilder.Entity("PizzaBox2.Domain.Models.Hold", b =>
+            modelBuilder.Entity("PizzaBox2.Domain.Models.Inventory", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Num");
+                    b.Property<int>("Count");
+
+                    b.Property<int>("LocationId");
+
+                    b.Property<string>("Name");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Holds");
+                    b.ToTable("Inventories");
                 });
 
             modelBuilder.Entity("PizzaBox2.Domain.Models.Location", b =>
@@ -75,6 +79,8 @@ namespace PizzaBox2.Data.Migrations
 
                     b.Property<int>("LocationId");
 
+                    b.Property<DateTime>("Time");
+
                     b.Property<int?>("UserId");
 
                     b.HasKey("Id");
@@ -96,11 +102,59 @@ namespace PizzaBox2.Data.Migrations
 
                     b.Property<int>("OrderId");
 
-                    b.Property<string>("SizeName");
+                    b.Property<int>("SizeId");
 
                     b.HasKey("Id");
 
                     b.ToTable("Pizzas");
+                });
+
+            modelBuilder.Entity("PizzaBox2.Domain.Models.Preset", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CrustId");
+
+                    b.Property<int>("LocationId");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Presets");
+                });
+
+            modelBuilder.Entity("PizzaBox2.Domain.Models.PresetTopping", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("InventoryId");
+
+                    b.Property<int>("PresetId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PresetToppings");
+                });
+
+            modelBuilder.Entity("PizzaBox2.Domain.Models.Size", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<decimal>("Cost");
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Sizes");
                 });
 
             modelBuilder.Entity("PizzaBox2.Domain.Models.Topping", b =>

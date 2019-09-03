@@ -1,14 +1,14 @@
 @{
-    Layout="_Layout2";
+    Layout="_Layout";
 }
 
 <div class="text-center">
     <h1 >New User Sign Up</h1>
     <p>
         <form action="/User/NewUser" method="post">
-         <label for="firstname">First Name:</label><br> <input type="text" id="firstname" name="firstname">
+         <label for="firstname">First Name:</label><br> <input type="text" id="firstname" name="firstname" pattern="[A-Za-z]+">
          <br>
-         <label for="lastname">Last Name:</label><br> <input type="text" id="lastname" name="lastname">
+         <label for="lastname">Last Name:</label><br> <input type="text" id="lastname" name="lastname" pattern="[A-Za-z]+">
          <br><br>
           <button type="submit">Submit</button>
     </form>

@@ -7,8 +7,11 @@ namespace PizzaBox2.Data
 
   public class PizzaBox2DbContext : DbContext
   {
+    public DbSet<Preset> Presets {get; set;}
+    public DbSet<PresetTopping> PresetToppings {get; set;}
+    public DbSet<Size> Sizes {get; set;}
+    public DbSet<Inventory> Inventories {get; set;}
     public DbSet<Transaction> Transactions {get; set;}
-    public DbSet<Hold> Holds {get; set;}
     public DbSet<Location> Locations {get; set;}
     public DbSet<User> Users {get; set;}
     public DbSet<Topping> Toppings {get; set;}
@@ -22,8 +25,10 @@ namespace PizzaBox2.Data
     protected override void OnModelCreating(ModelBuilder builder)
     {
       builder.Entity<Crust>().HasKey(c => c.Id);
+      
+      builder.Entity<Size>().HasKey(s=> s.Id);
 
-      builder.Entity<Hold>().HasKey(h => h.Id);
+      builder.Entity<Inventory>().HasKey(i => i.Id);
 
       builder.Entity<Pizza>().HasKey(p => p.Id);
 
@@ -36,6 +41,10 @@ namespace PizzaBox2.Data
       builder.Entity<Topping>().HasKey(t => t.Id);
 
       builder.Entity<Transaction>().HasKey(t2 => t2.Id);
+
+      builder.Entity<Preset>().HasKey(pre => pre.Id);
+
+      builder.Entity<PresetTopping>().HasKey(ps => ps.Id);
       
     }
   }

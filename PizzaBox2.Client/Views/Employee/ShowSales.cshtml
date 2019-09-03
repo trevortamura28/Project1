@@ -1,0 +1,19 @@
+
+@{
+    Layout="_Layout";
+}
+
+<div class="text-center">
+    <h1 >Recent Sales</h1>
+    <br><br>
+    @foreach (decimal d in ViewBag.costs)
+      {
+        <p>$@d</p><br>
+      }
+      <br><br>
+       
+       
+       <p> @Html.ActionLink("Back", "Index", "Employee") </p>
+
+</div>
+

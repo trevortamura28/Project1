@@ -1,0 +1,23 @@
+@{
+  Layout="_Layout";
+}
+
+<div class="text-center">
+    <h4 >Custom Pizza</h4>
+    <p>Please choose a crust type</p>
+    <form action="/Crust/CustomCrust" method="post">
+        @foreach (var c in ViewBag.crusts)
+        {
+             <label> <input type="radio" name= "Num" value="@c.Id"> @c.Name  </label><br>
+        }
+        <button type="submit">Select crust</button>
+    </form>
+    
+
+    <p> 
+</div>
+
+
+
+
+       

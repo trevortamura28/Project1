@@ -1,0 +1,22 @@
+
+@{
+  Layout="_Layout";
+}
+
+<div class="text-center">
+    <h4 >Classic Pizza Builder</h4>
+    <p>Please choose your Toppings</p><br>
+    <p>Include at least two toppings and at most five toppings</p>
+
+    <form action="/Preset/PresetTopping" method="post">
+     @foreach (var t in ViewBag.top)
+      {
+        <br>
+        <label><input type="checkbox" name="List" value="@t">@t</label>
+      }
+      <br><br>
+    <button type="submit">Submit Toppings</button>
+    
+    </form>
+    <p> 
+</div>

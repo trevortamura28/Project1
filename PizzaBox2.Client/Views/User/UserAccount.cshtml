@@ -1,10 +1,21 @@
 @model PizzaBox2.Domain.Models.User
 @{
-    Layout="_Layout2";
+    Layout="_Layout";
 }
 
 <div class="text-center">
     <h1 >Account Information</h1>
-    <p>@Model.FirstName</p>
-    <p></p>
+    <p>@Model.FirstName &nbsp; @Model.LastName</p>
+    @foreach (var list in ViewBag.list)
+      {
+        <p> Order:</p>
+        @foreach(var o in list)
+        {
+          <p>@o</p><br>
+        }
+      }
+      <br>
+      <br>
+      <p> @Html.ActionLink("Back", "PostOrder", "User") </p>
+    
 </div>

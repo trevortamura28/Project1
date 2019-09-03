@@ -4,12 +4,13 @@ using PizzaBox2.Domain.Models;
 using PizzaBox2.Data;
 using System.Linq;
 using System.Security.Claims;
+using PizzaBox2.Client.Models;
 
 namespace PizzaBox2.Client.Controllers
 {
   public class EmployeeController : Controller
   {
-    public PizzaBox2DbContext _db = new PizzaBox2DbContext();
+    private PizzaBox2DbContext _db = new PizzaBox2DbContext();
     public IActionResult Index()
     {
       return View();
@@ -17,7 +18,8 @@ namespace PizzaBox2.Client.Controllers
     [HttpGet]
     public IActionResult SelectLocation()
     {
-      return View(_db);
+      ViewBag.Locations=_db.Locations;
+      return View();
     }
     [HttpPost]
     public IActionResult SelectLocation(Hold h)
@@ -28,20 +30,12 @@ namespace PizzaBox2.Client.Controllers
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
-
     public IActionResult ShowUsers()
     {
+      OrderHelper oh = new OrderHelper();
       List<int> userIDs = new List<int>();
       List<string> names = new List<string>();
-      int l = 0;
-      int t = _db.Transactions.Count();
-      foreach (Transaction tran in _db.Transactions)
-      {
-        if (tran.Id == t)
-        {
-          l = tran.L;
-        }
-      }
+     int l = oh.GetLocation();
       foreach (Transaction transaction in _db.Transactions)
       {
         if (transaction.L == l && transaction.U != 0 && !userIDs.Contains(transaction.U))
@@ -49,7 +43,6 @@ namespace PizzaBox2.Client.Controllers
           userIDs.Add(transaction.U);
         }
       }
-
       foreach (User user in _db.Users)
       {
         foreach (int item in userIDs)
@@ -63,86 +56,53 @@ namespace PizzaBox2.Client.Controllers
       }
       return View(names);
     }
-
-
     public IActionResult ShowOrders()
     {
-      List<string> ordersS = new List<string>();
-      List<int> intL = new List<int>();
-      int lastT = _db.Transactions.Count();
-      int locID = 0;
-      string k = null;
-      foreach (Transaction t in _db.Transactions)
-      {
-        if (lastT == t.Id)
-        {
-          locID = t.L;
-        }
-      }
+      OrderHelper oh = new OrderHelper();
+      List<List<string>> list = new List<List<string>>();
+      int l = oh.GetLocation();
       foreach (Order o in _db.Orders)
       {
-        if (o.LocationId == locID)
+        if (o.LocationId == l)
         {
-          intL.Add(o.Id);
+          List<string> temp = oh.PizzaSentence(o.Id);
+          list.Add(temp);
         }
       }
-      foreach (Pizza p in _db.Pizzas)
+      ViewBag.list = list;
+      return View();
+    }
+    public IActionResult ShowSales()
+    {
+      OrderHelper oh = new OrderHelper();
+      int l = oh.GetLocation();
+      List<decimal> list = new List<decimal>();
+      foreach (Order o in _db.Orders)
       {
-        List<string> orderList = new List<string>();
-        foreach (int i in intL)
+        if (o.LocationId == l)
         {
-          if (p.OrderId == i)
-          {
-            List<string> toppings = new List<string>();
-            string crust = null;
-            foreach (Crust c in _db.Crusts)
-            {
-              if (c.Id == p.CrustId)
-              {
-                crust = c.Name;
-              }
-            }
-            foreach (Topping t in _db.Toppings)
-            {
-              if (t.PizzaId == p.Id)
-              {
-                toppings.Add(t.Name);
-              }
-            }
-            string pizzaSentence = "A " + p.SizeName + " pizza with " + crust + " crust, topped with ";
-            int count = 0;
-            foreach (string top in toppings)
-            {
-              if (count == 0)
-              {
-                pizzaSentence = pizzaSentence + top;
-                count++;
-              }
-              else if (count == (toppings.Count() - 1))
-              {
-                pizzaSentence = pizzaSentence + " and " + top + ".";
-              }
-              else
-              {
-                pizzaSentence = pizzaSentence + ", " + top;
-                count++;
-              }
-            }
-            orderList.Add(pizzaSentence);
-          }
+          list.Add(o.Cost);
         }
-        
-        foreach (var item in orderList)
-        {
-          k = k + item;
-        }
-        ordersS.Add(k);
       }
-      return View(ordersS);
+      ViewBag.costs=list;
+      return View();
     }
 
-
-
-
+    public IActionResult ShowInventory()
+    {
+      OrderHelper oh = new OrderHelper();
+      int l = oh.GetLocation();
+      List<Inventory> list = new List<Inventory>();
+       foreach (Inventory i in _db.Inventories)
+      {
+        if (i.LocationId == l)
+        {
+          list.Add(i);
+        }
+      }
+      ViewBag.inventories=list;
+      return View();
+    }
+    
   }
 }

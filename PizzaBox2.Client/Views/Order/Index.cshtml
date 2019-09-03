@@ -1,17 +1,22 @@
 @{
-  Layout="_Layout2";
+  Layout="_Layout";
 }
 
 <div class="text-center">
     <h4 >Order helper</h4>
-    <p>Would you like to continue?</p>
+    <p> Your current total is @ViewBag.cost</p><br>
+    @foreach (var item in ViewBag.list)
+    {
+        @item <br>
+    }
+    <p>Would you like another pizza?</p><br>
     <form action="/Order/Index" method="post">
-        <label> <input type="radio" name= "Num" value="1"> Yes </label>
-        <label> <input type="radio" name= "Num" value="2"> No </label>
+        <label> <input type="radio" name= "Num" value="1"> Yes </label><br>
+        <label> <input type="radio" name= "Num" value="2"> No </label><br>
         
         <button type="submit">Continue</button>
     </form>
     
 
-    <p> 
+    
 </div>
